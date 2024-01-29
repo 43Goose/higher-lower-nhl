@@ -8,8 +8,8 @@ export default function Home() {
         <h2 className="my-4">Who has better stats?</h2>
         <p className="my-4 text-center">A clone of the popular Higher Lower game by Gabritrav01 that uses NHL player stats instead of google searches.</p>
         <div className="flex flex-row w-full items-center justify-center">
-          <a href="/classic" className="flex justify-center items-center m-4 w-32 h-14 bg-cyan-700 rounded-full">CLASSIC</a>
-          <a href="/classic" className="flex justify-center items-center m-4 w-32 h-14 bg-cyan-700 rounded-full">GOALS</a>
+          <a href="/classic" className="flex justify-center items-center m-4 w-32 h-14 bg-cyan-600 rounded-full">CLASSIC</a>
+          <a href="/classic" className="flex justify-center items-center m-4 w-32 h-14 bg-cyan-600 rounded-full">GOALS</a>
         </div>
       </div>
     </main>
