@@ -1,10 +1,17 @@
-import PlayerCard from "../ui/PlayerCard";
+import Game from "../ui/Game";
 
 export default function CLASSIC() {
     return(
-        <div className="h-screen w-full flex flex-row">
-            <PlayerCard title="Test" stat={100000} picture="a" type="comparable" />
-            <PlayerCard title="Test 2" stat={150000} picture="b" type="compared" />
+        <div className="game-container h-screen w-full overflow-hidden">
+            <Game gameMode="points" />
         </div>
     );
 }
+
+/* --- TODO: ---
+
+    - Add scorebar                      |   X
+    - Add animated correct/incorrect    |   X
+    - Setup and connect real player db  |   X
+    - Quality control EVERYTHING        |   X
+*/

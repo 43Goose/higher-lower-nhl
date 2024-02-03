@@ -17,6 +17,9 @@
 }
 
 body {
+  padding: none;
+  margin: none;
+  box-sizing: border-box;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
