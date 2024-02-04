@@ -4,9 +4,10 @@ import PlayerCard from "./PlayerCard";
 import { useState } from "react";
 import getPlayerById from "../lib/data";
 import { Player } from "../lib/default-data";
+import { waitForSeconds } from "../lib/util";
 import next from "next";
 
-export default function Game({ gameMode }: { gameMode: 'points' | 'goals' | 'assists'}) {
+export default function Game({ gameMode, score, setScore, setVersus }: { gameMode: 'points' | 'goals' | 'assists', score: number, setScore: Function, setVersus: Function}) {
     const [comparable, setComparable] = useState<Player>(getPlayerById(1));
     const [compared, setCompared] = useState<Player>(getPlayerById(2));
     const [nextup, setNextUp] = useState<Player>(getPlayerById(3));
@@ -29,8 +30,10 @@ export default function Game({ gameMode }: { gameMode: 'points' | 'goals' | 'ass
     };
 
     const correctInput = async () => {
+        setScore(score + 1);
+        setVersus(1);
         setSlide(true);
-        await waitForSeconds(1000);
+        await waitForSeconds(1500);
 
         /* sets playercards to new data */
         setComparable(compared);
@@ -40,20 +43,12 @@ export default function Game({ gameMode }: { gameMode: 'points' | 'goals' | 'ass
         /* sets playercards back to original positions and setups */
         setSlide(false);
         setClicked(false);
+        setVersus(0);
     };
 
     const wrongInput = () => {
         alert('u suck');
     };
-
-    const waitForSeconds = (timeMS: number) => {
-        /* returns promise after given time */
-        return new Promise<void>((res, rej) => {
-            setTimeout(() => {
-                res();
-            }, timeMS);
-        });
-    }
 
     return (
         <div className={`h-full w-[150%] flex flex-row`}>

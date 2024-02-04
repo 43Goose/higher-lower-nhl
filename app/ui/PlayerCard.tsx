@@ -51,7 +51,7 @@ export default function PlayerCard({
     compareFn?: any
 }) {
     return (
-        <div className={`${type} flex flex-col justify-center items-center h-full w-1/3 ${slide ? '-translate-x-full transition-transform' : 'translate-x-0'}`}>
+        <div className={`${type} flex flex-col justify-center items-center h-full w-1/3 ${slide ? '-translate-x-full transition-transform duration-500' : 'translate-x-0'}`}>
             <p className={`${fugaz.className} text-4xl`}>"{title}"</p>
             <p>has</p>
             {
