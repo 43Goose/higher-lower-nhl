@@ -10,6 +10,6 @@ export default function CLASSIC({ searchParams }: { searchParams?: { [key: strin
     - Add scorebar                      |   C
     - Add animated correct/incorrect    |   C
     - Setup and connect real player db  |   I
-    - Add cookies/saving scores         |   3/4
+    - Add cookies/saving scores         |   C
     - Quality control EVERYTHING        |   I
 */
