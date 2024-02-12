@@ -19,7 +19,7 @@ export default async function Home() {
           <h1 className="text-sec">LOWER</h1>
         </div>
         <h2 className="lg:my-4 my-2 text-xl">Who has better stats?</h2>
-        <p className="lg:my-4 my-2">A clone of the popular Higher Lower game by Gabritrav01 that uses NHL player stats instead of google searches.</p>
+        <p className="lg:my-4 my-2">A clone of the popular Higher Lower game by Gabritrav01 that uses NHL player stats instead of google searches. Stats are updated after every season.</p>
         <div className={`flex md:flex-row flex-col w-full flex-center`}>
           <Link 
             href={{ pathname: '/classic', query: {cookies: await checkCookiesAccepted()}}} 
@@ -36,6 +36,9 @@ export default async function Home() {
         </div>
       </div>
       {await checkCookiesAccepted() ? null : <CookiesDisplay />}
+      <div className={`footer w-full absolute bottom-4 px-4`}>
+        <p className={`${fugaz.className} float-right`}>CREATED BY: GOOSE</p>
+      </div>
     </main>
   );
 }

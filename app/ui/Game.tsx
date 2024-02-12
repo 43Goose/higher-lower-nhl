@@ -4,7 +4,6 @@ import { getPlayerById } from "../lib/data";
 import { Player } from "../lib/player-data";
 import { waitForSeconds } from "../lib/util";
 import { GetHighScoreCookie, SetHighScoreCookie } from "../lib/cookies";
-import { News_Cycle } from "next/font/google";
 
 export default function Game(
     { 
@@ -58,39 +57,43 @@ export default function Game(
         }
         
         setVersus(1);
-        setSlide(true);
 
-        await waitForSeconds(1200);
+        /* check to see if player has gone through all the players and win the game if so */
+        if(2+newScore > playerOrder.length) { 
+            endGame(1); 
+            setVersus(0);
+        } else {
+            setSlide(true);
+            await waitForSeconds(1200);
 
-        /* sets playercards to new data */
-        setComparable(compared);
-        setCompared(nextup);
-        setNextUp(getPlayerById(playerOrder[2+newScore]));
+            /* sets playercards to new data */
+            setComparable(compared);
+            setCompared(nextup);
+            setNextUp(getPlayerById(playerOrder[2+newScore]));
 
-        /* sets playercards back to original positions and setups */
-        setSlide(false);
-        setClicked(false);
-        setVersus(0);
-        setDisableBtns(false);
+            /* sets playercards back to original positions and setups */
+            setSlide(false);
+            setClicked(false);
+            setVersus(0);
+            setDisableBtns(false);
+        }
     };
 
     const wrongInput = async () => {
+        setDisableBtns(true);
         setVersus(2);
         await waitForSeconds(1200);
         setVersus(0);
-        setClicked(false);
-        setDisableBtns(true);
-        endGame(true);
+        endGame(2);
     };
 
     return (
-        <div className={`md:h-full md:w-[150%] h-[150%] w-full flex md:flex-row flex-col`}>
+        <div className={`md:h-full md:w-[150%] h-[150%] w-full flex md:flex-row flex-col ${slide ? 'md:-translate-x-1/3 md:translate-y-0 -translate-y-1/3 transition-transform duration-500' : 'md:translate-x-0 translate-y-0'}`}>
             <PlayerCard 
                 title={comparable.name} 
                 stat={comparable[gameMode]} 
                 playerImage={comparable.playerImage} 
                 type="comparable" 
-                slide={slide} 
                 gameMode={gameMode} 
                 isMain={true}/>
             <PlayerCard
@@ -98,7 +101,6 @@ export default function Game(
                 stat={compared[gameMode]} 
                 playerImage={compared.playerImage} 
                 type={clicked ? 'comparable' : 'compared'} 
-                slide={slide}
                 compareFn={compare} 
                 gameMode={gameMode} 
                 otherPlayer={comparable.name}
@@ -107,7 +109,7 @@ export default function Game(
                 title={nextup.name} 
                 stat={nextup[gameMode]} 
                 playerImage={nextup.playerImage} 
-                type="nextup" slide={slide} 
+                type="nextup" 
                 otherPlayer={compared.name} 
                 gameMode={gameMode}
                 disableBtns={true}/>
