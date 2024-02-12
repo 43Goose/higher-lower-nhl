@@ -81,7 +81,7 @@ export default function Game(
     };
 
     return (
-        <div className={`h-full w-[150%] flex flex-row`}>
+        <div className={`md:h-full md:w-[150%] h-[150%] w-full flex md:flex-row flex-col`}>
             <PlayerCard 
                 title={comparable.name} 
                 stat={comparable[gameMode]} 

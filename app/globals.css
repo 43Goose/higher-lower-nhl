@@ -33,4 +33,14 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .flex-center {
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply flex justify-center items-center 2xsm:m-1 xsm:m-4 w-32 2xsm:min-w-28 xsm:min-w-32 h-14 bg-main rounded-full hover:scale-110 active:scale-95 active:bg-cyan-700;
+  }
 }

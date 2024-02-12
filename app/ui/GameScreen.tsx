@@ -37,21 +37,16 @@ export default function GameScreen({ gameMode, acceptedCookies }: { gameMode: 'p
             setRender(true);
         }
 
-        const bgText = 'bg-gradient-to-r from-cyan-600 from-50% to-white to-50% bg-[length:200%_100%] bg-clip-text bg-right group-hover/button:bg-left transition-[background] duration-500 ease-in-out'
-        const bgButton = 'bg-gradient-to-r from-white from-50% to-zinc-800 to-50% bg-[length:201%_100%] bg-right hover:bg-left transition-[background] duration-500 ease-in-out';
-
         return(
-            <div className={`h-screen w-full absolute top-0 flex justify-center items-center ${gameOver ? 'animate-fadeIn' : 'hidden'}`}>
-                <div className="h-1/3 w-1/2 max-w-3xl flex flex-col bg-slate-900 rounded-3xl justify-center items-center shadow-lg shadow-black">
-                    <p className={`${fugaz.className} text-5xl text-red-600`}>GAME OVER</p>
-                    <p className={`${fugaz.className} text-xl`}>{`Score: ${score}`}</p>
-                    {acceptedCookies ? <p className={`${fugaz.className} text-xl`}>{`Your High Score: ${highScore}`}</p> : null}
+            <div className={`h-screen w-full absolute top-0 flex flex-center ${gameOver ? 'animate-fadeIn' : 'hidden'}`}>
+                <div className={`${fugaz.className} lg:h-1/3 h-auto md:w-1/2 w-3/4 lg:p-0 p-4 text-center max-w-3xl flex flex-col bg-slate-900 rounded-3xl flex-center text-xl shadow-lg shadow-black`}>
+                    <p className={`text-5xl text-red-600`}>GAME OVER</p>
+                    <p>{`Score: ${score}`}</p>
+                    {acceptedCookies ? <p>{`Your High Score: ${highScore}`}</p> : null}
                     <button 
-                        className={`group/button m-4 w-36 h-14 ${bgButton} rounded-full active:scale-95`}
+                        className={`group/button m-4 w-36 h-14 btn-primary rounded-full active:scale-95`}
                         onClick={resetGame}     
-                    >
-                        <p className={`${fugaz.className} p-1 text-xl text-transparent ${bgText} group-active/button:text-lg`}>TRY AGAIN</p>
-                    </button>
+                    >TRY AGAIN</button>
                 </div>
             </div>
         );

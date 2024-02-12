@@ -23,6 +23,14 @@ const config: Config = {
           '100%': { display: 'flex', opacity: '1' }
         },
       },
+      colors: {
+        'main': '#0890b2',
+        'sec': '#dc2626',
+      },
+      screens: {
+        '2xsm': '280px',
+        'xsm': '360px'
+      },
     },
   },
   plugins: [],
