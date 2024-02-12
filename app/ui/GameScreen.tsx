@@ -8,7 +8,16 @@ import Scorebar from "../ui/scorebar";
 import { waitForSeconds } from "../lib/util";
 import { GetHighScoreCookie, SetHighScoreCookie, checkHighScoreCookie } from "../lib/cookies";
 
-export default function GameScreen({ gameMode, acceptedCookies }: { gameMode: 'points' | 'goals' | 'assists', acceptedCookies: boolean }) {
+export default function GameScreen(
+    {
+        gameMode, 
+        playerOrder, 
+        acceptedCookies 
+    }: { 
+        gameMode: 'points' | 'goals' | 'assists', 
+        playerOrder: Array<number>,
+        acceptedCookies: boolean 
+    }) {
     const [gameOver, setGameOver] = useState(false);
     const [score, setScore] = useState(0);
     const [versus, changeVersus] = useState(0);
@@ -55,7 +64,7 @@ export default function GameScreen({ gameMode, acceptedCookies }: { gameMode: 'p
     return render ? (
         <>
             <div className="game-container h-screen w-full overflow-hidden">
-                <Game gameMode={gameMode} score={score} setScore={setScore} setVersus={changeVersus} endGame={setGameOver} setHighScore={acceptedCookies ? setHighScore : undefined}/>
+                <Game gameMode={gameMode} score={score} setScore={setScore} playerOrder={playerOrder} setVersus={changeVersus} endGame={setGameOver} setHighScore={acceptedCookies ? setHighScore : undefined}/>
                 <Scorebar score={score} highScore={acceptedCookies ? highScore : undefined} />
                 <VersusBlock versusState={versus} />
             </div>

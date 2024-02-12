@@ -1,15 +1,17 @@
 import PlayerCard from "./PlayerCard";
 import { useState } from "react";
-import getPlayerById from "../lib/data";
+import { getPlayerById } from "../lib/data";
 import { Player } from "../lib/player-data";
 import { waitForSeconds } from "../lib/util";
 import { GetHighScoreCookie, SetHighScoreCookie } from "../lib/cookies";
+import { News_Cycle } from "next/font/google";
 
 export default function Game(
     { 
         gameMode, 
         score, 
         setScore, 
+        playerOrder,
         setVersus, 
         endGame,
         setHighScore
@@ -17,13 +19,14 @@ export default function Game(
         gameMode: 'points' | 'goals' | 'assists', 
         score: number, 
         setScore: Function, 
+        playerOrder: Array<number>,
         setVersus: Function, 
         endGame: Function,
         setHighScore?: Function
     }) {
-    const [comparable, setComparable] = useState<Player>(getPlayerById(1));
-    const [compared, setCompared] = useState<Player>(getPlayerById(2));
-    const [nextup, setNextUp] = useState<Player>(getPlayerById(3));
+    const [comparable, setComparable] = useState<Player>(getPlayerById(playerOrder[0]));
+    const [compared, setCompared] = useState<Player>(getPlayerById(playerOrder[1]));
+    const [nextup, setNextUp] = useState<Player>(getPlayerById(playerOrder[2]));
     const [clicked, setClicked] = useState(false);
     const [slide, setSlide] = useState(false);
     const [disableBtns, setDisableBtns] = useState(false);
@@ -62,7 +65,7 @@ export default function Game(
         /* sets playercards to new data */
         setComparable(compared);
         setCompared(nextup);
-        setNextUp(getPlayerById(nextup ? nextup.id + 1 : 1));
+        setNextUp(getPlayerById(playerOrder[2+newScore]));
 
         /* sets playercards back to original positions and setups */
         setSlide(false);

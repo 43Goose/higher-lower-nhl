@@ -21,8 +21,8 @@ export default function VersusBlock({ versusState }: { versusState: number }) {
         return(
             <div className='w-full h-full flex flex-center absolute top-0 left-0'>
                 <motion.svg width="50" height="50" viewBox="0 0 50 50" initial="hidden" animate="visible">
-                    <motion.line x1="10" y1="30" x2="20" y2="40" stroke-width="6px" stroke-linecap="round" stroke="#fff" variants={draw} custom={0.25} />
-                    <motion.line x1="20" y1="40" x2="40" y2="10" stroke-width="6px" stroke-linecap="round" stroke="#fff" variants={draw} custom={0.5} />
+                    <motion.line x1="10" y1="30" x2="20" y2="40" strokeWidth="6px" strokeLinecap="round" stroke="#fff" variants={draw} custom={0.25} />
+                    <motion.line x1="20" y1="40" x2="40" y2="10" strokeWidth="6px" strokeLinecap="round" stroke="#fff" variants={draw} custom={0.5} />
                 </motion.svg>
             </div>
         );
@@ -32,8 +32,8 @@ export default function VersusBlock({ versusState }: { versusState: number }) {
         return(
             <div className='w-full h-full flex flex-center absolute top-0 left-0'>
                 <motion.svg width="50" height="50" viewBox="0 0 50 50" initial="hidden" animate="visible">
-                    <motion.line x1="10" y1="10" x2="40" y2="40" stroke-width="6px" stroke-linecap="round" stroke="#fff" variants={draw} custom={0.25} />
-                    <motion.line x1="10" y1="40" x2="40" y2="10" stroke-width="6px" stroke-linecap="round" stroke="#fff" variants={draw} custom={0.5} />
+                    <motion.line x1="10" y1="10" x2="40" y2="40" strokeWidth="6px" strokeLinecap="round" stroke="#fff" variants={draw} custom={0.25} />
+                    <motion.line x1="10" y1="40" x2="40" y2="10" strokeWidth="6px" strokeLinecap="round" stroke="#fff" variants={draw} custom={0.5} />
                 </motion.svg>
             </div>
         );
