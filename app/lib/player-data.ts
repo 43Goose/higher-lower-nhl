@@ -7,6 +7,58 @@ export interface Player {
     playerImage: string;
 }
 
+export interface PlayerSkeleton {
+    id: number | undefined;
+    name: string | undefined;
+    points: number | undefined;
+    goals: number | undefined;
+    assists: number | undefined;
+    playerImage: string | undefined;
+}
+
+export const addPlayer = (p: Player) => {
+    Players.push(p);
+    console.log(`Added: ${p.name}`);
+}
+
+export const updatePlayer = (newInfo: PlayerSkeleton, playerName: string) => {
+    const oldPlayer = Players.find(p => p.name == playerName)
+    if(oldPlayer != null) {
+        const playerIndex = Players.findIndex(p => p.name);
+        for(const [k, v] of Object.entries(newInfo)) {
+            if(v != undefined) {
+                switch (k) {
+                    case 'name':
+                        Players[playerIndex].name = v;
+                        break;
+
+                    case 'points':
+                        Players[playerIndex].points = v;
+                        break;
+
+                    case 'goals':
+                        Players[playerIndex].goals = v;
+                        break;
+
+                    case 'assists':
+                        Players[playerIndex].assists = v;
+                        break;
+
+                    case 'playerImage':
+                        Players[playerIndex].playerImage = v;
+                        break;
+                
+                    default:
+                        break;
+                }
+            }
+        }
+    } else {
+        console.log("player doesn't exist");
+    }
+    
+}
+
 export const Players: Array<Player> = [
     {
         id: 1,
