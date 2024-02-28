@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { fugaz } from "./ui/fonts";
-import nhlLogo from "@/public/NHL.svg";
 import bg from "@/public/main_img.jpg";
 import Link from "next/link";
 import { checkCookiesAccepted, cookiesAccepted } from "./lib/cookies";
-import CookiesDisplay from "./ui/CookiesDisplay";
+import CookiesDisplay from "./ui/cookies-display";
+import nhlLogo from '@/public/NHL.svg';
 
 export default async function Home() {
   return (
@@ -22,7 +22,7 @@ export default async function Home() {
         <p className="lg:my-4 my-2">A clone of the popular Higher Lower game by Gabritrav01 that uses NHL player stats instead of google searches. Stats are updated after every season.</p>
         <div className={`flex md:flex-row flex-col w-full flex-center`}>
           <Link 
-            href={{ pathname: '/classic', query: {cookies: await checkCookiesAccepted()}}} 
+            href={{ pathname: '/points', query: {cookies: await checkCookiesAccepted()}}} 
             className={`${fugaz.className} btn-primary`}
           >CLASSIC</Link>
           <Link 

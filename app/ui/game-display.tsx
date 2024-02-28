@@ -1,22 +1,25 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import Game from "../ui/Game";
-import { fugaz } from "../ui/fonts";
-import VersusBlock from "../ui/VersusBlock";
-import Scorebar from "../ui/scorebar";
-import { waitForSeconds } from "../lib/util";
+import Game from "./game-component";
+import { fugaz } from "./fonts";
+import VersusBlock from "./versus-block";
+import Scorebar from "./scorebar";
 import { GetHighScoreCookie, SetHighScoreCookie, checkHighScoreCookie } from "../lib/cookies";
-import { generateOrder } from "../lib/data";
+import { PlayerInterface } from "../lib/data/definitions";
+import { shuffle } from "../lib/data/data";
+import { waitForSeconds } from "../lib/util";
 
 export default function GameScreen(
     {
         gameMode, 
         originalOrder, 
+        playerList,
         acceptedCookies 
     }: { 
         gameMode: 'points' | 'goals' | 'assists', 
         originalOrder: Array<number>,
+        playerList: Array<PlayerInterface>,
         acceptedCookies: boolean 
     }) {
     const [gameOver, setGameOver] = useState(0);
@@ -24,7 +27,7 @@ export default function GameScreen(
     const [versus, changeVersus] = useState(0);
     const [render, setRender] = useState(true);
     const [highScore, setHighScore] = useState(0);
-    const [playerOrder, setPlayerOrder] = useState(originalOrder);
+    const [playerOrder, setOrder] = useState(originalOrder);
 
     useEffect(() => {
         async function checkCookies() {
@@ -39,13 +42,17 @@ export default function GameScreen(
         checkCookies();
     });
 
-    function GameOverScreen() {
+    const newOrder = (curOrder: Array<number>) => {
+        return shuffle(curOrder);
+    }
+
+    function GameOverScreen() {        
         const resetGame = async () => {
             setScore(0);
             setGameOver(0);
             setRender(false);
-            setPlayerOrder(generateOrder());
-            await waitForSeconds(100);
+            setOrder(newOrder(playerOrder));
+            await waitForSeconds(10);
             setRender(true);
         }
 
@@ -67,7 +74,7 @@ export default function GameScreen(
     return render ? (
         <>
             <div className="game-container h-screen w-full overflow-hidden">
-                <Game gameMode={gameMode} score={score} setScore={setScore} playerOrder={playerOrder} setVersus={changeVersus} endGame={setGameOver} setHighScore={acceptedCookies ? setHighScore : undefined}/>
+                <Game gameMode={gameMode} score={score} setScore={setScore} playerOrder={playerOrder} playerList={playerList} setVersus={changeVersus} endGame={setGameOver} setHighScore={acceptedCookies ? setHighScore : undefined}/>
                 <Scorebar score={score} highScore={acceptedCookies ? highScore : undefined} />
                 <VersusBlock versusState={versus} />
             </div>
