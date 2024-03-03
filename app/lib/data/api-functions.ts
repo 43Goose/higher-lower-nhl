@@ -88,7 +88,8 @@ export async function checkExists(id: string): Promise<boolean> {
  * @returns {PlayerInterface}   - Player received from API
  */
 export async function getPlayerFromAPI(id: string): Promise<PlayerInterface> {
-    const data = await fetch(`/api/nhl/${id}/landing`).then(res => {
+    const apiPath = process.env.VERCEL_URL ? `https://api-web.nhle.com/v1/player/${id}/landing` : `${process.env.URL}/api/nhl/${id}/landing`;
+    const data = await fetch(apiPath).then(res => {
         if (!res.ok) throw new Error('Could not complete API request!');
         return res.json();
     });
@@ -108,8 +109,8 @@ export async function getPlayerFromAPI(id: string): Promise<PlayerInterface> {
  * @returns {string}    - URL of player headshot image
  */
 export async function getHeadShot(id: string): Promise<string> {
-    const localURL = process.env.PRODUCTION_URL ? process.env.PRODUCTION_URL : process.env.URL;
-    const data = await fetch(`${localURL}/api/nhl/${id}/landing`).then(res => {
+    const apiPath = process.env.VERCEL_URL ? `https://api-web.nhle.com/v1/player/${id}/landing` : `${process.env.URL}/api/nhl/${id}/landing`;
+    const data = await fetch(apiPath).then(res => {
         if (!res.ok) throw new Error('Could not complete API request!');
         return res.json();
     });
