@@ -54,7 +54,7 @@ export default function PlayerCard({
         <div className={`${type} flex flex-col flex-center md:h-full md:w-1/3 h-1/3 w-full text-lg text-center `}>
             <div style={{ backgroundImage: `url(${playerImage})` }} className="h-full w-full bg-cover bg-center brightness-50"></div>
             <div className="card-content absolute flex flex-col flex-center">
-                <p className={`${fugaz.className} text-4xl`}>{`"${title}"`}</p>
+                <p className={`${fugaz.className} text-4xl`}>"{title}"</p>
                 <p className="">has</p>
                 {
                     type === 'comparable' ? <ComparableBody /> :
