@@ -108,7 +108,8 @@ export async function getPlayerFromAPI(id: string): Promise<PlayerInterface> {
  * @returns {string}    - URL of player headshot image
  */
 export async function getHeadShot(id: string): Promise<string> {
-    const data = await fetch(`${process.env.URL}api/nhl/${id}/landing`).then(res => {
+    const localURL = process.env.VERCEL_URL ? process.env.VERCEL_URL : process.env.URL;
+    const data = await fetch(`${localURL}/api/nhl/${id}/landing`).then(res => {
         if (!res.ok) throw new Error('Could not complete API request!');
         return res.json();
     });
