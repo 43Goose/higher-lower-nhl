@@ -4,6 +4,7 @@ import { CardsSkeleton, DataSkeleton, QuickActionsSkeleton } from "@/app/ui/dash
 import CardWrapper from "@/app/ui/dashboard/card-wrapper";
 import QuickActions from "@/app/ui/dashboard/quick-actions";
 
+// Main dashboard page
 export default function DASHBOARD() {
     return (
         <div className="w-full min-h-full py-4">

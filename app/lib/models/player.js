@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
+// PLayer schema for MongoDB
 const playerSchema = new Schema(
     {
         nhlID: String,

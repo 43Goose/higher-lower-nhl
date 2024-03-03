@@ -5,13 +5,15 @@ import React, { MouseEvent, useState } from "react";
 import { updatePlayer } from "@/app/lib/data/api-functions";
 import { fugaz } from "../fonts";
 
+// Card component for random player
 export default function Card({
     player
 }: {
     player: { id: string, points: number, goals: number, assists: number, image: string }
 }) {
-    const [disabled, setDisabled] = useState(false);
+    const [disabled, setDisabled] = useState(false);    // Disabled state for update button
 
+    // Updates player and disables button on user click
     const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
         e.currentTarget.disabled = true;
         setDisabled(true);
@@ -21,8 +23,8 @@ export default function Card({
     return (
         <div className={`${fugaz.className} rounded-xl flex flex-row flex-center bg-slate-900 p-2 shadow-sm`}>
             <div className="w-1/3">
-                <div className="w-24 h-24 bg-main rounded-full overflow-hidden md:w-full md:h-auto">
-                    <Image src={player.image} width={96} height={96} alt="Player Image"/>
+                <div className="max-w-24 max-h-24 bg-main rounded-full overflow-hidden">
+                    <Image src={player.image} width={96} height={96} alt="Player Image" />
                 </div>
             </div>
             <div className="w-2/3 h-full">

@@ -5,28 +5,32 @@ import { waitForSeconds } from "@/app/lib/util";
 import { fugaz } from "@/app/ui/fonts";
 import { checkExists, updateAllPlayers, updatePlayer } from "@/app/lib/data/api-functions";
 
+// Update player page of dashboard
 export default function UpdateForm() {
-    const [idValue, setIdValue] = useState('');
-    const [imageValue, setImageValue] = useState('');
-    const [statusMsg, setStatus] = useState('');
-    const [showMsg, setShowMsg] = useState(false);
+    const [idValue, setIdValue] = useState('');                                 // State for ID input value
+    const [imageValue, setImageValue] = useState('');                           // State for player image value (image updating not fully implemented)
+    const [statusMsg, setStatus] = useState('');                                // State for setting status message
+    const [showMsg, setShowMsg] = useState(false);                              // State for toggling display of status message
 
+    // Handles change in ID input value
     const idChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIdValue(e.target.value);
     }
 
+    // Handles change of image input value
     const imageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setImageValue(e.target.value);
     }
 
+    // Handles form submission
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus('Working...');
         setShowMsg(true);
 
-        if(idValue != '') {
+        if (idValue != '') {                                                     // Checks if ID field isn't empty and updates specific player if so
             updateOne();
-        } else {
+        } else {                                                                // Updates all players if ID field is empty
             await updateAllPlayers();
             setStatus(`Updated All Players`);
         }
@@ -35,9 +39,10 @@ export default function UpdateForm() {
         setShowMsg(false);
     }
 
+    // Updates single player
     const updateOne = async () => {
         try {
-            if(await checkExists(idValue)) {
+            if (await checkExists(idValue)) {        // Checks if player exists and if so updates with current NHL stats
                 const player = imageValue != '' ? await updatePlayer(idValue, imageValue) : await updatePlayer(idValue);
                 setStatus(`Updated: ${player.name}`);
             } else {

@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   description: "Created by Goose",
 };
 
+// Main layout
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -14,6 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel='icon' href='/favicon.png' sizes='any'></link>
+      </head>
       <body className={`${inter.className} antialiased selection:bg-main`}>{children}</body>
     </html>
   );

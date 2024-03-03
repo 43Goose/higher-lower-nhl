@@ -1,27 +1,29 @@
 'use client'
 
 import { useState } from "react";
-import { fugaz } from "../../ui/fonts";
-import { waitForSeconds } from "../../lib/util";
-import { PlayerInterface } from "@/app/lib/data/definitions";
+import { fugaz } from "../../../ui/fonts";
+import { waitForSeconds } from "../../../lib/util";
 import { addPlayer, checkExists } from "@/app/lib/data/api-functions";
 
+// Add player dashboard page
 export default function AddForm() {
-    const [value, setValue] = useState('');
-    const [statusMsg, setStatus] = useState('');
-    const [showMsg, setShowMsg] = useState(false);
+    const [value, setValue] = useState('');                                 // State for player ID input value
+    const [statusMsg, setStatus] = useState('');                            // State for the status message
+    const [showMsg, setShowMsg] = useState(false);                          // State for controlling if status message is displayed
 
+    // Handles change in the player ID input
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
     }
 
+    // Handles submission of the form
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus('Working...');
         setShowMsg(true);
 
-        try {
-            if(await checkExists(value)) {
+        try {                                                               // Checks if player exists and if not, adds them to the db or returns an error if caught
+            if (await checkExists(value)) {
                 setStatus('Error: Player already exists!');
             } else {
                 const player = await addPlayer(value);
@@ -32,7 +34,7 @@ export default function AddForm() {
             setStatus('Error: Invalid ID!');
         }
 
-        await waitForSeconds(1000);
+        await waitForSeconds(1000);                                         // Waits for 1 second so status message doesn't immediately dissapear
         setShowMsg(false);
     }
 

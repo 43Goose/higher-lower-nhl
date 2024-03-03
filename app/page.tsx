@@ -6,6 +6,7 @@ import { checkCookiesAccepted, cookiesAccepted } from "./lib/cookies";
 import CookiesDisplay from "./ui/cookies-display";
 import nhlLogo from '@/public/NHL.svg';
 
+// The home page! I think everything here is pretty easy to understand if you've used react before (and I'm lazy) so I'm not gonna bother writing comments
 export default async function Home() {
   return (
     <main className="flex min-h-screen w-screen flex-col items-center justify-center lg:p-24">
@@ -21,16 +22,16 @@ export default async function Home() {
         <h2 className="lg:my-4 my-2 text-xl">Who has better stats?</h2>
         <p className="lg:my-4 my-2">A clone of the popular Higher Lower game by Gabritrav01 that uses NHL player stats instead of google searches. Stats are updated after every season.</p>
         <div className={`flex md:flex-row flex-col w-full flex-center`}>
-          <Link 
-            href={{ pathname: '/points', query: {cookies: await checkCookiesAccepted()}}} 
+          <Link
+            href={{ pathname: '/points', query: { cookies: await checkCookiesAccepted() } }}
             className={`${fugaz.className} btn-primary`}
           >CLASSIC</Link>
-          <Link 
-            href={{ pathname: '/goals', query: {cookies: await checkCookiesAccepted()}}} 
+          <Link
+            href={{ pathname: '/goals', query: { cookies: await checkCookiesAccepted() } }}
             className={`${fugaz.className} btn-primary`}
           >GOALS</Link>
-          <Link 
-            href={{ pathname: '/assists', query: {cookies: await checkCookiesAccepted()}}} 
+          <Link
+            href={{ pathname: '/assists', query: { cookies: await checkCookiesAccepted() } }}
             className={`${fugaz.className} btn-primary`}
           >ASSISTS</Link>
         </div>

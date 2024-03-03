@@ -4,23 +4,24 @@ import { PlayerInterface } from "../lib/data/definitions";
 import { waitForSeconds } from "../lib/util";
 import { GetHighScoreCookie, SetHighScoreCookie } from "../lib/cookies";
 
+// Game component that controls Player cards and user input
 export default function Game(
-    { 
-        gameMode, 
-        score, 
-        setScore, 
+    {
+        gameMode,
+        score,
+        setScore,
         playerOrder,
         playerList,
-        setVersus, 
+        setVersus,
         endGame,
         setHighScore
-    }: { 
-        gameMode: 'points' | 'goals' | 'assists', 
-        score: number, 
-        setScore: Function, 
+    }: {
+        gameMode: 'points' | 'goals' | 'assists',
+        score: number,
+        setScore: Function,
         playerOrder: Array<number>,
         playerList: Array<PlayerInterface>,
-        setVersus: Function, 
+        setVersus: Function,
         endGame: Function,
         setHighScore?: Function
     }) {
@@ -39,7 +40,7 @@ export default function Game(
         await waitForSeconds(1000);
 
         /* checks user input and updates game accordingly */
-        if(input === ans) {
+        if (input === ans) {
             correctInput();
         } else {
             wrongInput();
@@ -50,18 +51,20 @@ export default function Game(
         setDisableBtns(true);
 
         const newScore = score + 1;
+        const newIndex = newScore + 2;
         const hs = await GetHighScoreCookie();
         setScore(newScore);
-        if(setHighScore != undefined && newScore > hs) {
+        if (setHighScore != undefined && newScore > hs) {
             setHighScore(newScore);
             await SetHighScoreCookie(newScore);
         }
-        
+
         setVersus(1);
+        await waitForSeconds(300);
 
         /* check to see if player has gone through all the players and win the game if so */
-        if(2+newScore > playerOrder.length) { 
-            endGame(1); 
+        if (newIndex > playerOrder.length) {
+            endGame(1);
             setVersus(0);
         } else {
             setSlide(true);
@@ -70,7 +73,9 @@ export default function Game(
             /* sets playercards to new data */
             setComparable(compared);
             setCompared(nextup);
-            setNextUp(playerList[playerOrder[2+newScore]]);
+            if (newIndex < playerOrder.length) {
+                setNextUp(playerList[playerOrder[newIndex]]);
+            }
 
             /* sets playercards back to original positions and setups */
             setSlide(false);
@@ -90,30 +95,30 @@ export default function Game(
 
     return (
         <div className={`md:h-full md:w-[150%] h-[150%] w-full flex md:flex-row flex-col ${slide ? 'md:-translate-x-1/3 md:translate-y-0 -translate-y-1/3 transition-transform duration-500' : 'md:translate-x-0 translate-y-0'}`}>
-            <PlayerCard 
-                title={comparable.name} 
-                stat={comparable[gameMode]} 
-                playerImage={comparable.playerImage} 
-                type="comparable" 
-                gameMode={gameMode} 
-                isMain={true}/>
             <PlayerCard
-                title={compared.name} 
-                stat={compared[gameMode]} 
-                playerImage={compared.playerImage} 
-                type={clicked ? 'comparable' : 'compared'} 
-                compareFn={compare} 
-                gameMode={gameMode} 
-                otherPlayer={comparable.name}
-                disableBtns={disableBtns}/>
-            <PlayerCard 
-                title={nextup.name} 
-                stat={nextup[gameMode]} 
-                playerImage={nextup.playerImage} 
-                type="nextup" 
-                otherPlayer={compared.name} 
+                title={comparable.name}
+                stat={comparable[gameMode]}
+                playerImage={comparable.playerImage}
+                type="comparable"
                 gameMode={gameMode}
-                disableBtns={true}/>
+                isMain={true} />
+            <PlayerCard
+                title={compared.name}
+                stat={compared[gameMode]}
+                playerImage={compared.playerImage}
+                type={clicked ? 'comparable' : 'compared'}
+                compareFn={compare}
+                gameMode={gameMode}
+                otherPlayer={comparable.name}
+                disableBtns={disableBtns} />
+            <PlayerCard
+                title={nextup.name}
+                stat={nextup[gameMode]}
+                playerImage={nextup.playerImage}
+                type="nextup"
+                otherPlayer={compared.name}
+                gameMode={gameMode}
+                disableBtns={true} />
         </div>
     );
 }

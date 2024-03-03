@@ -1,3 +1,4 @@
+// Player type for game functions
 export interface PlayerInterface {
     nhlID: string;
     name: string;
@@ -5,4 +6,10 @@ export interface PlayerInterface {
     goals: number;
     assists: number;
     playerImage: string;
+}
+
+// User type for login/logout functions
+export interface UserInterface {
+    username: string;
+    password: string;
 }
