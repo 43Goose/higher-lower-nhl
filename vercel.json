@@ -1,0 +1,8 @@
+{
+    "redirects": [
+        {
+            "source": "/api/nhl/:path*",
+            "destination": "https://api-web.nhle.com/v1/player/:path*"
+        }
+    ]
+}
