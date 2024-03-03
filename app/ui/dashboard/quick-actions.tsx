@@ -4,7 +4,7 @@ import { updateAllPlayers } from "@/app/lib/data/api-functions";
 import { fugaz } from "../fonts";
 
 // Quick actions component for dashboard
-export default async function QuickActions() {
+export default function QuickActions() {
     const handleUpdate = async () => {
         await updateAllPlayers();
     }
