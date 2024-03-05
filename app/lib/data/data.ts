@@ -1,12 +1,10 @@
 import { PlayerInterface } from "./definitions";
 
-const localPath = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/` : process.env.URL;
-
 /** Generates the order players will be grabbed from DB to eliminate possible duplicate players
  * @returns {Array<number>} - Randomized order of numbers in a range from 0 to number of players in DB
  */
 export async function generateOrder(): Promise<Array<number>> {
-    const players = await fetch(localPath + 'api/all-players').then(res => res.json());
+    const players = await fetch(`${process.env.API_URL}/player/all-players`).then(res => res.json());
     let orderArr = Array.from({ length: players.length }, (val, i) => i);
 
     return shuffle(orderArr);
@@ -16,7 +14,7 @@ export async function generateOrder(): Promise<Array<number>> {
  * @returns {Array<PlayerInterface>}    - Ordered list of players for use in game
  */
 export async function getPlayerList(): Promise<Array<PlayerInterface>> {
-    const rawPlayers = await fetch(localPath + 'api/all-players').then(res => res.json());
+    const rawPlayers = await fetch(`${process.env.API_URL}/player/all-players`).then(res => res.json());
     const playerList = rawPlayers.map((p: { nhlID: string; name: string; points: number; goals: number; assists: number; playerImage: string; }) => {
         const { nhlID, name, points, goals, assists, playerImage } = p;
         return { nhlID: nhlID, name: name, points: points, goals: goals, assists: assists, playerImage: playerImage };

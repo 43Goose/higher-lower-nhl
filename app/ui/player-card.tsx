@@ -1,3 +1,4 @@
+import { PlayerInterface } from "../lib/data/definitions";
 import { fugaz } from "./fonts";
 import CountUp from "react-countup";
 
@@ -7,9 +8,7 @@ const formatNumber = (num: number) => {
 
 // Player card component for showing player info, image and interactivity
 export default function PlayerCard({
-    title,
-    stat,
-    playerImage,
+    player,
     type,
     gameMode,
     otherPlayer,
@@ -17,11 +16,9 @@ export default function PlayerCard({
     compareFn,
     disableBtns
 }: {
-    title: string,
-    stat: number,
-    playerImage: string,
+    player: PlayerInterface,
     type: 'comparable' | 'compared' | 'nextup',
-    gameMode?: 'points' | 'goals' | 'assists',
+    gameMode: 'points' | 'goals' | 'assists',
     otherPlayer?: string,
     isMain?: boolean,
     compareFn?: any,
@@ -32,8 +29,8 @@ export default function PlayerCard({
             <>
                 {
                     /* checks if element is the original comparable to avoid playing counter on every render */
-                    isMain || disableBtns ? <p className={`${fugaz.className} text-5xl text-main`}>{formatNumber(stat)}</p> :
-                        <CountUp className={`${fugaz.className} text-5xl text-main`} end={stat} formattingFn={formatNumber} duration={0.5}></CountUp>
+                    isMain || disableBtns ? <p className={`${fugaz.className} text-5xl text-main`}>{formatNumber(player[gameMode])}</p> :
+                        <CountUp className={`${fugaz.className} text-5xl text-main`} end={player[gameMode]} formattingFn={formatNumber} duration={0.5}></CountUp>
                 }
                 <p>{`career ${gameMode}`}</p>
             </>
@@ -52,9 +49,9 @@ export default function PlayerCard({
 
     return (
         <div className={`${type} flex flex-col flex-center md:h-full md:w-1/3 h-1/3 w-full text-lg text-center `}>
-            <div style={{ backgroundImage: `url(${playerImage})` }} className="h-full w-full bg-cover bg-center brightness-50"></div>
+            <div style={{ backgroundImage: `url(${player.playerImage})` }} className="h-full w-full bg-cover bg-center brightness-50"></div>
             <div className="card-content absolute flex flex-col flex-center">
-                <p className={`${fugaz.className} text-4xl`}>{`"${title}"`}</p>
+                <p className={`${fugaz.className} text-4xl`}>{`"${player.name}"`}</p>
                 <p className="">has</p>
                 {
                     type === 'comparable' ? <ComparableBody /> :

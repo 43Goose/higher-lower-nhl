@@ -28,7 +28,7 @@ export default function GameScreen(
     const [versus, changeVersus] = useState(0);
     const [render, setRender] = useState(true);
     const [highScore, setHighScore] = useState(0);
-    const [playerOrder, setOrder] = useState(originalOrder);
+    const [playerOrder, setOrder] = useState<Array<number>>(originalOrder); // utilize useEffect more inside client components
 
     useEffect(() => {
         async function checkCookies() {
@@ -39,7 +39,6 @@ export default function GameScreen(
                 await SetHighScoreCookie(0);
             }
         }
-
         checkCookies();
     });
 
@@ -52,7 +51,7 @@ export default function GameScreen(
             setScore(0);
             setGameOver(0);
             setRender(false);
-            setOrder(newOrder(playerOrder));
+            setOrder(newOrder(playerOrder!));
             await waitForSeconds(10);
             setRender(true);
         }

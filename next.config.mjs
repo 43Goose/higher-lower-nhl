@@ -8,6 +8,12 @@ const nextConfig = {
             },
         ],
     },
+    env: {
+        MONGO_URI: process.env.MONGO_URI,
+        NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+        API_URL: process.env.API_URL,
+        URL: process.env.URL
+    },
     async rewrites() {
         return [
             {

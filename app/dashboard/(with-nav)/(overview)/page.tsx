@@ -1,6 +1,6 @@
 import { fugaz } from "@/app/ui/fonts";
 import { Suspense } from "react";
-import { CardsSkeleton, DataSkeleton, QuickActionsSkeleton } from "@/app/ui/dashboard/skeletons";
+import { CardsSkeleton, DataSkeleton, QuickActionsSkeleton } from "@/app/ui/skeletons";
 import CardWrapper from "@/app/ui/dashboard/card-wrapper";
 import QuickActions from "@/app/ui/dashboard/quick-actions";
 

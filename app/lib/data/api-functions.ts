@@ -5,15 +5,15 @@ import { PlayerInterface } from "./definitions";
  */
 export async function addPlayer(id: string): Promise<any> {
     try {
-        const player = await getPlayerFromAPI(id);
-        await fetch('/api/player', {
-            method: "POST",
+        const player = await getPlayerFromNHL(id);
+        const res = await fetch(`${process.env.API_URL}/player/${id}/add`, {
+            method: 'POST',
             headers: {
                 "Content-type": "application/json"
             },
             body: JSON.stringify({ nhlID: player.nhlID, name: player.name, points: player.points, goals: player.goals, assists: player.assists, playerImage: player.playerImage })
         });
-        return player;
+        return res;
     } catch (error) {
         console.error(error);
     }
@@ -21,23 +21,16 @@ export async function addPlayer(id: string): Promise<any> {
 
 /** Updates player with given ID in DB with up to date NHL stats and optional image 
  * @param id    - NHL ID of player to update
- * @param {string} [newImage]   - Optional image to change current player image
 */
-export async function updatePlayer(id: string, newImage?: string): Promise<any> {
+export async function updatePlayer(id: string): Promise<any> {
     try {
-        const player = await getPlayerFromAPI(id);
-        let bodyObject;
-        if (newImage) {
-            bodyObject = { points: player.points, goals: player.goals, assists: player.assists, new_image: newImage };
-        } else {
-            bodyObject = { points: player.points, goals: player.goals, assists: player.assists };
-        }
-        await fetch(`/api/player/${id}/update`, {
+        const curStats = await getPlayerFromNHL(id);
+        const player = await fetch(`${process.env.API_URL}/player/${id}/update`, {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json'
+                "Content-type": "application/json"
             },
-            body: JSON.stringify(bodyObject)
+            body: JSON.stringify({ id: curStats.nhlID, points: curStats.points, goals: curStats.goals, assists: curStats.assists })
         });
         return player;
     } catch (error) {
@@ -47,21 +40,12 @@ export async function updatePlayer(id: string, newImage?: string): Promise<any> 
 
 /** Updates all Players in DB with up to date stats from NHL API */
 export async function updateAllPlayers() {
-    let updateCount = 0;
     try {
-        const players = await fetch('/api/all-players').then(res => res.json());
+        const players = await fetch(`${process.env.API_URL}/player/all-players`).then(res => res.json());
         players.forEach(async (p: { nhlID: string; points: number; goals: number; assists: number; }) => {
-            const curStats = await getPlayerFromAPI(p.nhlID);
+            const curStats = await getPlayerFromNHL(p.nhlID);
             if (p.points != curStats.points || p.goals != curStats.goals || p.assists != curStats.assists) {
-                const bodyObject = { points: curStats.points, goals: curStats.goals, assists: curStats.assists };
-                updateCount++;
-                await fetch(`/api/player/${p.nhlID}/update`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(bodyObject)
-                });
+                await updatePlayer(p.nhlID);
             }
         });
     } catch (error) {
@@ -76,19 +60,19 @@ export async function updateAllPlayers() {
 */
 export async function checkExists(id: string): Promise<boolean> {
     try {
-        const res = await fetch(`/api/player/${id}`).then(res => res.json());
+        const res = await fetch(`${process.env.API_URL}/player/${id}`).then(res => res.json());
         return res.length > 0;
     } catch (e) {
         return false;
     }
 }
 
-/** Gets a player with given ID from NHL API
- * @param id    - NHL ID of desired player
- * @returns {PlayerInterface}   - Player received from API
+/** Gets player from NHL API via proxy
+ * @param id    - NHL ID of player
+ * @returns {PlayerInterface}   - Player type for easy use in functions
  */
-export async function getPlayerFromAPI(id: string): Promise<PlayerInterface> {
-    const apiPath = process.env.VERCEL_URL ? `https://api-web.nhle.com/v1/player/${id}/landing` : `${process.env.URL}/api/nhl/${id}/landing`;
+const getPlayerFromNHL = async (id: string): Promise<PlayerInterface> => {
+    const apiPath = process.env.API_URL + `/player/${id}/nhl`;
     const data = await fetch(apiPath).then(res => {
         if (!res.ok) throw new Error('Could not complete API request!');
         return res.json();

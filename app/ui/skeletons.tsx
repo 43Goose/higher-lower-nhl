@@ -1,3 +1,5 @@
+import { fugaz } from "./fonts";
+
 // Shimmer effect for loading components
 const shimmer =
   'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
@@ -60,7 +62,29 @@ export function DataSkeleton() {
   );
 }
 
-// Skeletion for dashboard page while data is loading
+// Skeleton for Player cards while game loads
+export function PlayerSkeleton() {
+  return (
+    <div className={`flex flex-col flex-center bg-slate-950 md:h-full md:w-1/3 h-1/3 w-full text-lg text-center`}>
+      <div className="flex flex-col flex-center">
+        <p className={`${fugaz.className} ${shimmer} text-4xl`}>{`"Loading..."`}</p>
+        <p className="">has</p>
+      </div>
+    </div>
+  );
+}
+
+export function GameSkeleton() {
+  return (
+    <div className={`md:h-full md:w-[150%] h-[150%] w-full flex md:flex-row flex-col`}>
+      <PlayerSkeleton />
+      <PlayerSkeleton />
+      <PlayerSkeleton />
+    </div>
+  );
+}
+
+// Skeleton for dashboard page while data is loading
 export default function DashboardSkeleton() {
   return (
     <>

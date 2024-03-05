@@ -25,15 +25,13 @@ export default function Game(
         endGame: Function,
         setHighScore?: Function
     }) {
-    const [comparable, setComparable] = useState<PlayerInterface>(playerList[playerOrder[0]]);
-    const [compared, setCompared] = useState<PlayerInterface>(playerList[playerOrder[1]]);
-    const [nextup, setNextUp] = useState<PlayerInterface>(playerList[playerOrder[2]]);
+    const [currentPlayers, setCurrent] = useState<Array<PlayerInterface>>([playerList[playerOrder[0]], playerList[playerOrder[1]], playerList[playerOrder[2]]]);
     const [clicked, setClicked] = useState(false);
     const [slide, setSlide] = useState(false);
     const [disableBtns, setDisableBtns] = useState(false);
 
     const compare = async (input: boolean) => {
-        const ans = compared[gameMode] >= comparable[gameMode];
+        const ans = currentPlayers[1][gameMode] >= currentPlayers[0][gameMode];
 
         /* switches buttons to the stat count and waits */
         setClicked(true);
@@ -71,11 +69,7 @@ export default function Game(
             await waitForSeconds(1200);
 
             /* sets playercards to new data */
-            setComparable(compared);
-            setCompared(nextup);
-            if (newIndex < playerOrder.length) {
-                setNextUp(playerList[playerOrder[newIndex]]);
-            }
+            setCurrent([currentPlayers[1], currentPlayers[2], newIndex < playerOrder.length ? playerList[playerOrder[newIndex]] : currentPlayers[2]]);
 
             /* sets playercards back to original positions and setups */
             setSlide(false);
@@ -96,27 +90,21 @@ export default function Game(
     return (
         <div className={`md:h-full md:w-[150%] h-[150%] w-full flex md:flex-row flex-col ${slide ? 'md:-translate-x-1/3 md:translate-y-0 -translate-y-1/3 transition-transform duration-500' : 'md:translate-x-0 translate-y-0'}`}>
             <PlayerCard
-                title={comparable.name}
-                stat={comparable[gameMode]}
-                playerImage={comparable.playerImage}
+                player={currentPlayers[0]}
                 type="comparable"
                 gameMode={gameMode}
                 isMain={true} />
             <PlayerCard
-                title={compared.name}
-                stat={compared[gameMode]}
-                playerImage={compared.playerImage}
+                player={currentPlayers[1]}
                 type={clicked ? 'comparable' : 'compared'}
                 compareFn={compare}
                 gameMode={gameMode}
-                otherPlayer={comparable.name}
+                otherPlayer={currentPlayers[0].name}
                 disableBtns={disableBtns} />
             <PlayerCard
-                title={nextup.name}
-                stat={nextup[gameMode]}
-                playerImage={nextup.playerImage}
+                player={currentPlayers[2]}
                 type="nextup"
-                otherPlayer={compared.name}
+                otherPlayer={currentPlayers[1].name}
                 gameMode={gameMode}
                 disableBtns={true} />
         </div>
