@@ -108,7 +108,7 @@ const getPlayerFromNHL = async (id: string): Promise<PlayerInterface> => {
  * @returns {string}    - URL of player headshot image
  */
 export async function getHeadShot(id: string): Promise<string> {
-    const apiPath = process.env.VERCEL_URL ? `https://api-web.nhle.com/v1/player/${id}/landing` : `${process.env.URL}/api/nhl/${id}/landing`;
+    const apiPath = process.env.API_URL + `/player/${id}/nhl`;
     const data = await fetch(apiPath).then(res => {
         if (!res.ok) throw new Error('Could not complete API request!');
         return res.json();
