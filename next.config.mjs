@@ -17,7 +17,7 @@ const nextConfig = {
     async rewrites() {
         return [
             {
-                source: '/api/nhl/:path*',
+                source: '/nhlapi/:path*',
                 destination: 'https://api-web.nhle.com/v1/player/:path*'
             }
         ]

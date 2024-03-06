@@ -6,7 +6,7 @@ import { PlayerInterface } from "./definitions";
 export async function addPlayer(id: string): Promise<any> {
     try {
         const player = await getPlayerFromNHL(id);
-        const res = await fetch(`${process.env.API_URL}/player/${id}/add`, {
+        const res = await fetch(`${process.env.API_URL}/player/add`, {
             method: 'POST',
             headers: {
                 "Content-type": "application/json"
@@ -25,7 +25,7 @@ export async function addPlayer(id: string): Promise<any> {
 export async function updatePlayer(id: string): Promise<any> {
     try {
         const curStats = await getPlayerFromNHL(id);
-        const player = await fetch(`${process.env.API_URL}/player/${id}/update`, {
+        const player = await fetch(`${process.env.API_URL}/player/update`, {
             method: 'POST',
             headers: {
                 "Content-type": "application/json"
@@ -72,6 +72,7 @@ export async function checkExists(id: string): Promise<boolean> {
  * @returns {PlayerInterface}   - Player type for easy use in functions
  */
 const getPlayerFromNHL = async (id: string): Promise<PlayerInterface> => {
+    // `/nhlapi/${id}/landing`;
     const apiPath = process.env.API_URL + `/player/${id}/nhl`;
     const data = await fetch(apiPath).then(res => {
         if (!res.ok) throw new Error('Could not complete API request!');
