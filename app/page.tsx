@@ -9,7 +9,7 @@ import nhlLogo from '@/public/NHL.svg';
 // The home page! I think everything here is pretty easy to understand if you've used react before (and I'm lazy) so I'm not gonna bother writing comments
 export default async function Home() {
   return (
-    <main className="flex min-h-screen w-screen flex-col items-center justify-center lg:p-24">
+    <main className="flex h-screen w-screen flex-col items-center justify-center lg:p-24">
       <div className="w-full h-full absolute top-0 brightness-50">
         <Image src={bg} alt="rogers arena" layout="fill" objectFit="cover" />
       </div>
@@ -25,7 +25,7 @@ export default async function Home() {
           <Link
             href={{ pathname: '/points', query: { cookies: await checkCookiesAccepted() } }}
             className={`${fugaz.className} btn-primary`}
-          >CLASSIC</Link>
+          >POINTS</Link>
           <Link
             href={{ pathname: '/goals', query: { cookies: await checkCookiesAccepted() } }}
             className={`${fugaz.className} btn-primary`}

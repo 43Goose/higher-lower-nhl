@@ -53,7 +53,7 @@ export default function UpdateForm() {
             <div className={`max-w-lg w-3/4 h-4/5 bg-slate-900 flex items-center flex-col text-center rounded-3xl md:p-12 py-8 px-12 md:w-1/2 md:h-2/3`}>
                 <p className={`${fugaz.className} text-main md:text-5xl text-4xl`}>UPDATE PLAYERS</p>
                 <form className="flex flex-col justify-between w-full h-full md:w-2/3 text-xl md:my-12 my-8" onSubmit={handleSubmit}>
-                    <div className="relative flex flex-col text-left">
+                    <div className="relative flex flex-col text-center md:text-left">
                         <input className="peer bg-transparent border-b-2 border-stone-500 focus:border-main focus:outline-none transition-colors z-10" type="text" value={value} placeholder=" " onChange={idChange} />
                         <label className="absolute peer-focus:-translate-y-6 peer-focus:scale-90 peer-focus:text-main peer-[&:not(:placeholder-shown)]:-translate-y-6 peer-focus:text-main peer-[&:not(:placeholder-shown)]:scale-90 transition-all">Player ID</label>
                         <p className="text-sm">Enter ID or leave blank to update all</p>

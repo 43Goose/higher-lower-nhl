@@ -17,13 +17,13 @@ export default function QuickActions() {
     }
 
     return (
-        <div className={`${fugaz.className} w-full flex justify-evenly bg-slate-900 rounded-lg py-4 px-2 md:px-4`}>
-            <div className="p-2 rounded-xl bg-slate-950 md:py-4 md:px-8">
-                <button className="btn-primary mx-0" onClick={handleUpdate}>UPDATE ALL</button>
+        <div className={`${fugaz.className} w-full flex justify-evenly bg-slate-900 rounded-lg py-4 px-2 md:px-4 2xsm:justify-center`}>
+            <div className="p-2 rounded-xl bg-slate-950 md:py-4 md:px-8 2xsm:bg-transparent 2xsm:p-0">
+                <button className="btn-primary mx-0 2xsm:scale-90" onClick={handleUpdate}>UPDATE ALL</button>
             </div>
-            <div className="p-2 rounded-xl bg-slate-950 md:py-4 md:px-8">
+            <div className="p-2 rounded-xl bg-slate-950 md:py-4 md:px-8 2xsm:bg-transparent 2xsm:p-0">
                 <div>
-                    <button className="btn-primary mx-0" onClick={playSound}>CLOWN HORN</button>
+                    <button className="btn-primary mx-0 2xsm:scale-90" onClick={playSound}>CLOWN HORN</button>
                     <audio id="audio" src="/sound.mp3" />
                 </div>
             </div>
