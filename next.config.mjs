@@ -12,7 +12,8 @@ const nextConfig = {
         MONGO_URI: process.env.MONGO_URI,
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
         API_URL: process.env.API_URL,
-        URL: process.env.URL
+        URL: process.env.URL,
+        API_KEY: process.env.API_KEY
     },
     async rewrites() {
         return [

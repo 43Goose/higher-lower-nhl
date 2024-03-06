@@ -1,4 +1,5 @@
 import { PlayerInterface } from "./definitions";
+const bcrypt = require('bcrypt');
 
 /** Adds player with given ID to DB from NHL API
  * @param id    - NHL ID of player to add
@@ -6,12 +7,21 @@ import { PlayerInterface } from "./definitions";
 export async function addPlayer(id: string): Promise<any> {
     try {
         const player = await getPlayerFromNHL(id);
+        const hashedKey = await bcrypt.hash(process.env.API_KEY, 10);
         const res = await fetch(`${process.env.API_URL}/player/add`, {
             method: 'POST',
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({ nhlID: player.nhlID, name: player.name, points: player.points, goals: player.goals, assists: player.assists, playerImage: player.playerImage })
+            body: JSON.stringify({
+                nhlID: player.nhlID,
+                name: player.name,
+                points: player.points,
+                goals: player.goals,
+                assists: player.assists,
+                playerImage: player.playerImage,
+                key: hashedKey
+            })
         });
         return res;
     } catch (error) {
@@ -25,12 +35,19 @@ export async function addPlayer(id: string): Promise<any> {
 export async function updatePlayer(id: string): Promise<any> {
     try {
         const curStats = await getPlayerFromNHL(id);
+        const hashedKey = await bcrypt.hash(process.env.API_KEY, 10);
         const player = await fetch(`${process.env.API_URL}/player/update`, {
             method: 'POST',
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({ id: curStats.nhlID, points: curStats.points, goals: curStats.goals, assists: curStats.assists })
+            body: JSON.stringify({
+                id: curStats.nhlID,
+                points: curStats.points,
+                goals: curStats.goals,
+                assists: curStats.assists,
+                key: hashedKey
+            })
         });
         return player;
     } catch (error) {
